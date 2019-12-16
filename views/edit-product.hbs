@@ -39,16 +39,35 @@
                                 <input class="form-control validate tm-small" rows="15"
                                 required value ="{{publisherID}}"/>
                             </div>
+                            
                             <div class="form-group mb-3">
+
                                 <label for="category">Danh mục</label>
                                 {{#each categoriesID}}
-<!--                             <select class="custom-select tm-select-accounts" id="category">
+
+                                <div class="form-group mb-3">
+                                    <div class="selectBox" onclick="showCheckboxes()">
+                                    <select class="custom-select tm-select-accounts">
+                                        <option>{{this}}</option>
+                                    </select>
+                                    <div class="overSelect"></div>
+                                    </div>
+                                    <div id="checkboxes">
+                                    <label for="one">
+                                        <input type="checkbox" id="one" />First checkbox</label>
+                                    <label for="two">
+                                        <input type="checkbox" id="two" />Second checkbox</label>
+                                    <label for="three">
+                                        <input type="checkbox" id="three" />Third checkbox</label>
+                                    </div>
+                                </div>
+                                 {{!-- <select class="custom-select tm-select-accounts" id="category">
                                     <option>Select category</option>
                                     <option value="1" selected>New Arrival</option>
                                     <option value="2">Most Popular</option>
                                     <option value="3">Trending</option>
-                                </select> -->
-                                <span>{{this}}</span>
+                                </select>  --}}
+                                {{!-- <span>{{this}}</span> --}}
                                 {{/each}}
                             </div>
 
@@ -88,4 +107,7 @@
 <script src="jquery-ui-datepicker/jquery-ui.min.js"></script>
 <!-- https://jqueryui.com/download/ -->
 <script src="js/bootstrap.min.js"></script>
+
+<script src="js/main.js"></script>
+<link rel="stylesheet" href="css/main.css" type="text/css" />
 <!-- https://getbootstrap.com/ -->
