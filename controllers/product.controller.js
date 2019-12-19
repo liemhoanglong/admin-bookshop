@@ -22,19 +22,13 @@ handlebars.registerHelper("publisher_select",(selectedpublisherID,publisher_list
 
 handlebars.registerHelper("catagory_mulselect",(catagories,catagories_list)=>{
 	let html="";
-	//console.log(catagories_list);
 			catagories_list.forEach((item)=> { 
 				let check=false;
 				catagories.forEach((catagory)=>{
-					  console.log(item.categoriesID);
-					  console.log(catagory);
-					  console.log('a');
-				if(catagory == item.catagoriesID){
+				if(catagory == item.categoriesID){
 					check=true;
-					console.log("check true");
 				}	
 			});
-			//console.log(check);
 			if(check)
 			{
 				html = html + '<label for="one"><input class="catagoriCheckbox" type="checkbox" checked onclick="changeStatus()" id="'+ item.categoriesID 
@@ -47,6 +41,23 @@ handlebars.registerHelper("catagory_mulselect",(catagories,catagories_list)=>{
 			});
 		return new handlebars.SafeString(html);	
 })
+
+handlebars.registerHelper("showcatagories",(catagoryID,catagories_list)=>{
+	let html="";
+	let count=0;
+	catagories_list.forEach((item)=> { 
+		catagoryID.forEach((catagory)=>{
+		if(catagory == item.categoriesID){
+			if(count>0)
+			html = html + ", ";
+		html = html +item.categories;
+		count++;
+		}	
+	});
+	});
+return new handlebars.SafeString(html);	
+})
+
 
 module.exports.showProduct = (req, res, next) => {
 	//if (req.user.type === 3) {		
