@@ -12,10 +12,10 @@ handlebars.registerHelper("publisher_select",(selectedpublisherID,publisher_list
 	publisher_list.forEach(function(item) { 
 		if(item.publisherID == selectedpublisherID)
 		{
-			html = html + '<option selected>'+ item.publisher + '</option>';
+			html = html + '<option selected value="'+item.publisherID+'">'+ item.publisher + '</option>';
 		}
 		else{
-			html = html + '<option>'+item.publisher+'</option>';
+			html = html + '<option value="'+item.publisherID+'">'+item.publisher+'</option>';
 		} });
 		return new handlebars.SafeString(html);
 });
@@ -32,11 +32,11 @@ handlebars.registerHelper("catagory_mulselect",(catagories,catagories_list)=>{
 			if(check)
 			{
 				html = html + '<label for="one"><input class="catagoriCheckbox" type="checkbox" checked onclick="changeStatus()" id="'+ item.categoriesID 
-				+ '" value="' +item.categories + '">'+item.categories+'</label>';
+				+ '" value="'+ item.categoriesID+ '-' +item.categories +'">'+item.categories+'</label>';
 			}
 			else{
 				html = html + '<label for="one"><input class="catagoriCheckbox" type="checkbox" onclick="changeStatus()" id="' + item.categoriesID 
-					+ '" value="'+item.categories+'">'+item.categories+'</label>';
+					+ '" value="'+ item.categoriesID+ '-' +item.categories +'">'+item.categories+'</label>';
 			}
 			});
 		return new handlebars.SafeString(html);	
@@ -44,18 +44,24 @@ handlebars.registerHelper("catagory_mulselect",(catagories,catagories_list)=>{
 
 handlebars.registerHelper("showcatagories",(catagoryID,catagories_list)=>{
 	let html="";
+	let categoriesID="";
 	let count=0;
 	catagories_list.forEach((item)=> { 
 		catagoryID.forEach((catagory)=>{
 		if(catagory == item.categoriesID){
 			if(count>0)
-			html = html + ", ";
+			{
+				html = html + ", ";
+				categoriesID=categoriesID+",";
+			}
 		html = html +item.categories;
+		categoriesID=categoriesID+item.categoriesID;
 		count++;
 		}	
 	});
 	});
-return new handlebars.SafeString(html);	
+	let result= '<option id="catagories" value="'+ categoriesID +'">'+html+'</option>'
+return new handlebars.SafeString(result);	
 })
 
 

@@ -31,12 +31,12 @@
                             </div>
                             <div class="form-group mb-3">
                                 <label for="description">Thông tin</label>
-                                <textarea class="form-control validate tm-small" rows="15"
+                                <textarea class="form-control validate tm-small" rows="15" name="info"
                                 required>{{item.info}}</textarea>
                             </div>
                             <div class="form-group mb-3">
                                 <label for="publisher">Nhà xuất bản</label>
-                                 <select class="custom-select tm-select-accounts" id="publisher">
+                                 <select name="publisher" class="custom-select tm-select-accounts" id="publisher">
                                      {{publisher_select item.publisherID publisher}}
                                 </select> 
                             </div>
@@ -47,8 +47,8 @@
 
                                 <div class="form-group mb-3">
                                     <div class="selectBox" onclick="showCheckboxes()">
-                                    <select class="custom-select tm-select-accounts">
-                                        <option id="catagories">{{showcatagories item.categoriesID category}}</option>
+                                    <select name="categories" class="custom-select tm-select-accounts">
+                                       {{showcatagories item.categoriesID category}}
                                     </select>
                                     <div class="overSelect"></div>
                                     </div>
