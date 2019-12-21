@@ -34,31 +34,31 @@
                                 <label for="publisher">Nhà xuất bản</label>
                                 <select name="publisher" class="custom-select tm-select-accounts" id="publisher">
                                     {{#each publisher}}
-                                    <option value="{{publisherID}}">{{publisher}}</option>
+                                    <option value="{{this.publisherID}}">{{publisher}}</option>
                                     {{/each}}
-                                </select> 
-
+                                </select>
                             </div>
-                            <!-- <div class="form-group mb-3">
+                             <div class="form-group mb-3">
                                 <label for="category">Thể loại</label>
                                 <div class="form-group mb-3">
                                     <div class="selectBox" onclick="showCheckboxes()">
                                         <select name="categories" class="custom-select tm-select-accounts">
-                                            {{#each category}}
-                                            <option value="{{categoryID}}">{{category}}</option>
-                                            {{/each}}
+                                            {{!-- {{#each category}} --}}
+                                            <option id="catagories" value=""></option>
+                                            {{!-- {{/each}} --}}
                                         </select>
                                         <div class="overSelect"></div>
                                     </div>
                                     <div id="checkboxes">
                                         {{#each category}}
                                         <label for="one">
-                                            <input class="catagoriCheckbox" type="checkbox"  onclick="changeStatus()" id="{{this.categoriesID}}" value="{{this.categories}}" />{{this.categories}}
+                                            <input class="catagoriCheckbox" type="checkbox"  onclick="changeStatus()" id="{{this.categoriesID}}" value="{{this.categoriesID}}-{{this.categories}}" />{{this.categories}}
                                         </label>
                                         {{/each}}
                                     </div>
                                 </div>
-                            </div> -->
+                            </div> 
+
                             <button type="submit" class="btn btn-primary btn-block text-uppercase">Thêm sản phẩm mới</button>
                         </form>
                     </div>

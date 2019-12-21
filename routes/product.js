@@ -49,14 +49,20 @@ router.post('/insert-publisher', (req, res, next) => {
 
 /* POST insert-product page. */
 router.post('/insert-product',  (req, res, next) => {
+	let category= req.body.categories;
+	// convert req.body.categories to array
+	let arraycategory= category.split(',');
 	const temp = {
 		title: req.body.name,
 		price: req.body.price,
 		author: req.body.author,
-		info: req.body.info,
-		publisher: req.body.publisher
+		categoriesID: arraycategory,
+		publisherID: req.body.publisher,
+		info: req.body.info
 	}
 	let data = new products(temp);
+	console.log(req.body.publisher);
+	console.log("a");
 	console.log(data);
 	data.save();
 	res.redirect('/products');
