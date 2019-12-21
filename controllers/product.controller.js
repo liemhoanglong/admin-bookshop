@@ -83,8 +83,13 @@ module.exports.showProduct = (req, res, next) => {
 	// }
 }
 
-module.exports.addProduct = (req, res, next) => {
-	res.render('add-product', {title : 'Thêm sản phẩm mới'});
+module.exports.addProduct = async (req, res, next) => {
+	const[publisher,category]= 
+	await Promise.all([
+		publishers.find().sort('publisher'),
+		categories.find().sort('categories')
+	]);
+	res.render('add-product', {title : 'Thêm sản phẩm mới', publisher: publisher, category: category});
 }
 
 module.exports.editProduct = async (req, res, next) => {

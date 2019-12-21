@@ -31,61 +31,50 @@
                             </div>
                             <div class="form-group mb-3">
                                 <label for="description">Thông tin</label>
-                                <textarea class="form-control validate tm-small" rows="15" name="info"
-                                required>{{item.info}}</textarea>
+                                <textarea class="form-control validate tm-small" rows="15" name="info" required>{{item.info}}</textarea>
                             </div>
                             <div class="form-group mb-3">
                                 <label for="publisher">Nhà xuất bản</label>
-                                 <select name="publisher" class="custom-select tm-select-accounts" id="publisher">
-                                     {{publisher_select item.publisherID publisher}}
-                                </select> 
+                                <select name="publisher" class="custom-select tm-select-accounts" id="publisher">{{publisher_select item.publisherID publisher}}</select> 
                             </div>
-                            
                             <div class="form-group mb-3">
-
-                                <label for="category">Danh mục</label>
-
+                                <label for="category">Thể loại</label>
                                 <div class="form-group mb-3">
                                     <div class="selectBox" onclick="showCheckboxes()">
-                                    <select name="categories" class="custom-select tm-select-accounts">
-                                       {{showcatagories item.categoriesID category}}
-                                    </select>
-                                    <div class="overSelect"></div>
+                                        <select name="categories" class="custom-select tm-select-accounts">{{showcatagories item.categoriesID category}}</select>
+                                        <div class="overSelect"></div>
                                     </div>
-                                    
                                     <div id="checkboxes">
-                                    {{!-- {{#each category}}
-                                    <label for="one">
-                                        <input class="catagoriCheckbox" type="checkbox"  onclick="changeStatus()" id="{{this.categoriesID}}" value="{{this.categories}}" />{{this.categories}}</label>
-                                    {{/each}} --}}
-                                    {{catagory_mulselect item.categoriesID category}}
+                                        {{!-- {{#each category}}
+                                        <label for="one">
+                                            <input class="catagoriCheckbox" type="checkbox"  onclick="changeStatus()" id="{{this.categoriesID}}" value="{{this.categories}}" />{{this.categories}}
+                                        </label>
+                                        {{/each}} --}}
+                                        {{catagory_mulselect item.categoriesID category}}
                                     </div>
                                 </div>
-                                
                             </div>
-
-                        </div>
-                        <div class="col-xl-6 col-lg-6 col-md-12 mx-auto mb-4">
-
-                            {{#each item.img}}
-                            <div class="tm-product-img-edit mx-auto">
-                                <img src="{{this}}" alt="Product image" class="img-fluid d-block mx-auto">
-                                <i class="fas fa-cloud-upload-alt tm-upload-icon"
-                                onclick="document.getElementById('fileInput').click();"></i>
-                            </div>
-                            {{/each}}
-                            <div class="custom-file mt-3 mb-3">
-                                <input id="fileInput" type="file" style="display:none;" />
-                                <input type="button" class="btn btn-primary btn-block mx-auto" value="CHANGE IMAGE NOW"
-                                onclick="document.getElementById('fileInput').click();" />
-                            </div>
-                        </div>
-                        <div class="col-6">
                             <button type="submit" class="btn btn-primary btn-block text-uppercase">Lưu</button>
+                            <br>
+                        </form>
+                    </div>
+                    <div class="col-xl-6 col-lg-6 col-md-12 mx-auto mb-4">
+
+                        {{#each item.img}}
+                        <div class="tm-product-img-edit mx-auto">
+                            <img src="{{this}}" alt="Product image" class="img-fluid d-block mx-auto">
+                            <i class="fas fa-cloud-upload-alt tm-upload-icon"
+                            onclick="document.getElementById('fileInput').click();"></i>
                         </div>
-                    </form>
+                        {{/each}}
+                        <div class="custom-file mt-3 mb-3">
+                            <input id="fileInput" type="file" style="display:none;" />
+                            <input type="button" class="btn btn-primary btn-block mx-auto" value="CHANGE IMAGE NOW"
+                            onclick="document.getElementById('fileInput').click();" />
+                        </div>
+                    </div>
                     <div class="col-6">
-                        <a href="/product-delete?id={{this.id}}" style="color:white;">  
+                        <a href="/product-delete?id={{item.id}}" style="color:white;">  
                             <button type="submit" class="btn btn-primary btn-block text-uppercase">Xóa sản phẩm</button>
                         </a>
                     </div>

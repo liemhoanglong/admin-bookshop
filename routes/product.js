@@ -25,7 +25,7 @@ router.get('/edit-product', controllerProduct.editProduct);
 
 /* POST insert-category page. */
 router.post('/insert-category', (req, res, next) => {
-const temp = {
+	const temp = {
 		categoriesID: req.body.code,
 		categories: req.body.name
 	}
@@ -47,6 +47,20 @@ router.post('/insert-publisher', (req, res, next) => {
 	res.redirect('/products');
 });
 
+/* POST insert-product page. */
+router.post('/insert-product',  (req, res, next) => {
+	const temp = {
+		title: req.body.name,
+		price: req.body.price,
+		author: req.body.author,
+		info: req.body.info,
+		publisher: req.body.publisher
+	}
+	let data = new products(temp);
+	console.log(data);
+	data.save();
+	res.redirect('/products');
+});
 /* POST edit-product page. */
 router.post('/edit-product',  (req, res, next) => {
 	products.findById(req.query.id)
@@ -70,17 +84,33 @@ router.post('/edit-product',  (req, res, next) => {
 });
 
 
-// /* POST edit-publisher page. */
-// router.post('/edit-publisher', (req, res, next) => {
-// 	//console.log(req.query.id);
-// 	publishers.findById(req.query.id)
-// 	.then (data => {
-// 		data.publisherID = req.body.code;
-// 		data.publisher = req.body.name;
-// 		data.save();
-// 	})
-// 	res.redirect('/products');
-// });
+/* POST edit-category page. */
+router.post('/edit-category', (req, res, next) => {
+	//console.log(req.query.id);
+	categories.findById(req.query.id)
+	.then (data => {
+		//console.log(req.body.code);
+		//console.log(req.body.name);
+		//console.log(data);
+		data.categoriesID = req.body.code;
+		data.categories = req.body.name;
+		data.save();
+	})
+	res.redirect('/products');
+});
+
+/* POST edit-publisher page. */
+router.post('/edit-publisher', (req, res, next) => {
+	//console.log(req.query.id);
+	publishers.findById(req.query.id)
+	.then (data => {
+		data.publisherID = req.body.code;
+		data.publisher = req.body.name;
+		data.save();
+	})
+	res.redirect('/products');
+});
+
 
 /* GET category delete page. */
 router.get('/category-delete', function (req, res, next) {
