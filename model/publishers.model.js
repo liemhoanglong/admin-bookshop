@@ -16,4 +16,8 @@ var publisherSchema = new mongoose.Schema({
 
 //4.tạo model
 var publishers = mongoose.model('publishers', publisherSchema);
-module.exports = publishers;
+//module.exports = publishers;
+
+module.exports.getAllPublisher = function() {
+  return publishers.find().sort('publisher');
+}

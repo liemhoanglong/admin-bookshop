@@ -19,9 +19,14 @@ router.get('/products', controllerProduct.showProduct);
 /* GET add-product page. */
 router.get('/add-product', controllerProduct.addProduct);
 
+/* POST insert-product page. */
+router.post('/insert-product', controllerProduct.insertProduct);
+
 /* GET edit-product page. */
 router.get('/edit-product', controllerProduct.editProduct);
 
+/* GET product delete page. */
+router.get('/product-delete', controllerProduct.deleteProduct);
 
 /* POST insert-category page. */
 router.post('/insert-category', (req, res, next) => {
@@ -47,41 +52,9 @@ router.post('/insert-publisher', (req, res, next) => {
 	res.redirect('/products');
 });
 
-/* POST insert-product page. */
-router.post('/insert-product',  (req, res, next) => {
-	const temp = {
-		title: req.body.name,
-		price: req.body.price,
-		author: req.body.author,
-		info: req.body.info,
-		publisher: req.body.publisher
-	}
-	let data = new products(temp);
-	console.log(data);
-	data.save();
-	res.redirect('/products');
-});
+
 /* POST edit-product page. */
-router.post('/edit-product',  (req, res, next) => {
-	products.findById(req.query.id)
-	.then (data => {
-		//console.log(data);
-		//console.log(req.body);
-		data.title = req.body.name;
-		data.price = req.body.price;
-		data.author = req.body.author;
-		let category= req.body.categories;
-		// convert req.body.categories to array
-		let arraycategory= category.split(',');
-		data.categoriesID = arraycategory;
-		data.publisherID = req.body.publisher;
-		data.info = req.body.info;
-		data.save();
-		// console.log("data after edit")
-		// console.log(data);
-	})
-	res.redirect('/products');
-});
+router.post('/edit-product', controllerProduct.updateProduct);
 
 
 /* POST edit-category page. */
@@ -126,11 +99,5 @@ router.get('/publisher-delete', function (req, res, next) {
 	});
 });
 
-/* GET product delete page. */
-router.get('/product-delete', function (req, res, next) {
-	products.findByIdAndRemove(req.query.id, (err) => {
-		res.redirect('/products');
-	});
-});
 
 module.exports = router;

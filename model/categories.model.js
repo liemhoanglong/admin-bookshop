@@ -17,5 +17,8 @@ var categoriesSchema = new mongoose.Schema({
 //4.tạo model
 
 var categories = mongoose.model('categories', categoriesSchema);
-module.exports = categories;
+// module.exports = categories;
 
+module.exports.getAllCategories = function() {
+  return categories.find().sort('categories');
+}

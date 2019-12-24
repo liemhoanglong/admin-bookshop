@@ -21,4 +21,20 @@ var productsSchema = new mongoose.Schema({
 
 //4.tạo model
 var products = mongoose.model('products', productsSchema);
-module.exports = products;
+//module.exports = products;
+
+module.exports.getAllProduct = function() {
+  return products.find().sort('title');
+}
+
+module.exports.getProductByID = (id) =>{
+  return products.findById(id);
+}
+
+module.exports.deleteProductByID = (id) =>{
+  return products.findByIdAndRemove(id);
+}
+
+module.exports.createProduct = (title, price, author, info, publisher) =>{
+  return new products ({title, price, author, info, publisher});
+}
