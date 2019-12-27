@@ -10,13 +10,13 @@ var mongoose = require('mongoose');
 
 //3.tạo Schema
 var productsSchema = new mongoose.Schema({
-  title: String,
-  price: Number,
-  author: String,
-  categoriesID: [String],
-  publisherID: String,
-  info: String,
-  img: [String]
+	title: String,
+	price: Number,
+	author: String,
+	categoriesID: [String],
+	publisherID: String,
+	info: String,
+	img: [String]
 }, { collection: 'products' });
 
 //4.tạo model
@@ -24,17 +24,25 @@ var products = mongoose.model('products', productsSchema);
 //module.exports = products;
 
 module.exports.getAllProduct = function() {
-  return products.find().sort('title');
+	return products.find().sort('title');
 }
 
 module.exports.getProductByID = (id) =>{
-  return products.findById(id);
+	return products.findById(id);
 }
 
 module.exports.deleteProductByID = (id) =>{
-  return products.findByIdAndRemove(id);
+  // console.log('delete ' + id);
+  // return products.findByIdAndRemove(id);
+  products.findById(id, function(err, data){
+  	data.remove();
+  });
 }
 
-module.exports.createProduct = (title, price, author, info, publisher) =>{
-  return new products ({title, price, author, info, publisher});
+
+
+
+
+module.exports.createProduct = (title, price, author, info, categoriesID, publisher) =>{
+	return new products ({title, price, author, info, categoriesID, publisher});
 }

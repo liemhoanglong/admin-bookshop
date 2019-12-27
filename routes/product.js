@@ -25,8 +25,14 @@ router.post('/insert-product', controllerProduct.insertProduct);
 /* GET edit-product page. */
 router.get('/edit-product', controllerProduct.editProduct);
 
-/* GET product delete page. */
+/* GET product delete */
 router.get('/product-delete', controllerProduct.deleteProduct);
+// router.get('/product-delete', function (req, res, next) {
+// 	products.findByIdAndRemove(req.query.id, (err) => {
+// 		res.redirect('/products');
+// 	});
+// });
+
 
 /* POST insert-category page. */
 router.post('/insert-category', (req, res, next) => {

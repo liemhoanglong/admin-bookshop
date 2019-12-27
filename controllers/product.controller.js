@@ -65,26 +65,31 @@ handlebars.registerHelper("showcatagories",(catagoryID,catagories_list)=>{
 })
 
 
-module.exports.showProduct = async(req, res, next) => {
+module.exports.showProduct = (req, res, next) => {
 	//if (req.user.type === 3) {		
-		const[category, publisher, product] = 
-		await Promise.all([
-			categories.getAllCategories(),
-			publishers.getAllPublisher(),
-			products.getAllProduct()
-			]);
-		res.render('products', {categories: category, publish: publisher, items: product, title : 'Danh sách sản phẩm'});
-
-		/*categories.find().sort('categories')
+		
+		// const[category, publisher, product] = 
+		// await Promise.all([
+		// 	categories.getAllCategories(),
+		// 	publishers.getAllPublisher(),
+		// 	products.getAllProduct()
+		// 	]);
+		// res.render('products', {categories: category, publish: publisher, items: product, title : 'Danh sách sản phẩm'});
+		
+		categories.getAllCategories()
+		//categories.find().sort('categories')
 		.then(function (category) {
-			publishers.find().sort('publisher')
+			//publishers.find().sort('publisher')
+			publishers.getAllPublisher()
 			.then(function (publisher) {
-				products.find().sort('title')
+				//products.find().sort('title')
+				products.getAllProduct()
 				.then(function (product) {
 					res.render('products', {categories: category, publish: publisher, items: product, title : 'Danh sách sản phẩm'});
 				});
 			});        
-		});*/
+		});
+
 	// } else {
 	// 	req.flash('error_msg', 'Bạn không được phép truy cập vào đây!');
 	// 		res.redirect('/account');
@@ -136,12 +141,16 @@ module.exports.deleteProduct = (req, res, next) => {
 		console.log("Can't show item\n");
 		res.sendStatus(500);
 	}
+	// products.deleteProductByID(req.query.id);
+	// products.findByIdAndRemove(req.query.id, (err) => {
+	// 	res.redirect('/products');
+	// });
 }
 
 module.exports.insertProduct = (req, res, next) => {
-	let category= req.body.categories;
+	let category = req.body.categories;
 	// convert req.body.categories to array
-	let arraycategory= category.split(',');
+	let arraycategory = category.split(',');
 	const temp = {
 		title: req.body.name,
 		price: req.body.price,
@@ -150,7 +159,7 @@ module.exports.insertProduct = (req, res, next) => {
 		categoriesID: arraycategory,
 		publisher: req.body.publisher
 	}
-	let data = products.createProduct(temp.title, temp.price, temp.author, temp.info, temp.publisher);
+	let data = products.createProduct(temp.title, temp.price, temp.author, temp.info, temp.categoriesID, temp.publisher);
 	console.log(data);
 	data.save();
 	res.redirect('/products');
