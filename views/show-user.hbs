@@ -23,73 +23,87 @@
 		<div class="tm-block-col tm-col-account-settings">
 			<div class="tm-bg-primary-dark tm-block tm-block-settings">
 				<h2 class="tm-block-title">Thông tin tài khoản</h2>
-				<form class="tm-signup-form row">
+				<form action="/edit-employee?id={{data.id}}" method="POST" class="tm-signup-form row">
 					<div class="form-group col-lg-6">
-						<label for="name">Tên người dùng (<span style="color:#F5A623;">*</span>)</label>
+						<label for="name">Tên người dùng:</label>
 						<input
 						id="name"
 						name="name"
 						type="text"
 						value="{{data.name}}"
 						class="form-control validate"
+						disabled
 						/>
 					</div>
 					<div class="form-group col-lg-6">
-						<label for="email">Email (<span style="color:#F5A623;">*</span>)</label>
+						<label for="email">Email:</label>
 						<input
 						id="email"
 						name="email"
 						type="text"
 						value="{{data.email}}"
 						class="form-control validate"
+						disabled
 						/>
 					</div>
 					<div class="form-group col-lg-6">
-						<label for="phone">Số điện thoại (<span style="color:#F5A623;">*</span>)</label>
+						<label for="phone">Số điện thoại:</label>
 						<input
 						id="phone"
 						name="phone"
 						type="text"
 						value="{{data.phone}}"
 						class="form-control validate"
+						disabled
 						/>
 					</div>
 					<div class="form-group col-lg-6">
-						<label for="type">Loại (<span style="color:#F5A623;">*</span>)</label>
-						<input
+						<label for="type">Loại:</label>
+						<!-- <input
 						id="type"
 						name="type"
 						type="text"
 						value="{{data.type}}"
 						class="form-control validate"
-						/>
+						/> -->
+						<select name="type" class="custom-select tm-select-accounts" id="type">{{type_select data.type type}}</select> 
 					</div>
 					<div class="form-group col-lg-6">
-						<label for="img">Link ảnh đại diện (<span style="color:#F5A623;">*</span>)</label>
+						<label for="img">Link ảnh đại diện:</label>
 						<input
 						id="img"
 						name="img"
 						type="text"
 						value="{{data.img}}"
 						class="form-control validate"
+						disabled
 						/>
 					</div>
 					<div class="form-group col-lg-12">
-						<label for="address">Địa chỉ (<span style="color:#F5A623;">*</span>)</label>
+						<label for="address">Địa chỉ:</label>
 						<input
 						id="address"
 						name="address"
 						type="text"
 						value="{{data.address}}"
 						class="form-control validate"
+						disabled
 						/>
 					</div>
+					<div class="form-group col-lg-12">
+						<button
+						type="submit"
+						class="btn btn-primary btn-block text-uppercase"
+						>
+						Cập nhật
+					</button>
+					</div>
+					<div class="col-lg-12">
+						<a href="/delete?id={{data.id}}" style="color:white;"> 
+							<button class="btn btn-primary btn-block text-uppercase">Xóa tài khoản</button>
+						</a>
+					</div>
 				</form>
-				<div class="col-12">
-					<a href="/delete?id={{data.id}}" style="color:white;"> 
-						<button type="submit" class="btn btn-primary btn-block text-uppercase">Xóa tài khoản</button>
-					</a>
-				</div>
 			</div>
 		</div>
 	</div>

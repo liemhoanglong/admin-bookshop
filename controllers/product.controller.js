@@ -141,10 +141,6 @@ module.exports.deleteProduct = (req, res, next) => {
 		console.log("Can't show item\n");
 		res.sendStatus(500);
 	}
-	// products.deleteProductByID(req.query.id);
-	// products.findByIdAndRemove(req.query.id, (err) => {
-	// 	res.redirect('/products');
-	// });
 }
 
 module.exports.insertProduct = (req, res, next) => {

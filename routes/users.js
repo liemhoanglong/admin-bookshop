@@ -38,18 +38,10 @@ router.get('/logout', controllerUser.logout);
 router.get('/forget-password', controllerUser.forgetPassword);
 
 /* GET User page. */
-router.get('/show-user', function (req, res, next) {
+router.get('/show-user', controllerUser.showUser);
 
-	admins.findById(req.query.id, function (err, userData) {
-		console.log(userData);
-		if (err) {
-			console.log("Can't show data\n");
-			res.sendStatus(500);
-		} else {
-			res.render('show-user', {title : 'Thông tin nhân viên', data: userData});
-		}
-	})
-});
+/* POST User page. */
+router.post('/edit-employee', controllerUser.editEmployee);
 
 /* GET delete page. */
 router.get('/delete', function (req, res, next) {

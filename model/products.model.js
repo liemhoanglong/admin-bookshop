@@ -41,8 +41,6 @@ module.exports.deleteProductByID = (id) =>{
 
 
 
-
-
 module.exports.createProduct = (title, price, author, info, categoriesID, publisher) =>{
 	return new products ({title, price, author, info, categoriesID, publisher});
 }

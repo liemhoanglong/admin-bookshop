@@ -31,3 +31,9 @@
 #checkboxes label:hover {
   background-color: #1e90ff;
 }
+
+.form-control:disabled, .form-control[readonly] {
+    background-color: #435C70 ;
+    opacity: 1;
+}
+

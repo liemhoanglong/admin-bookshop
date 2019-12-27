@@ -5,7 +5,23 @@ const admins = require('../model/admins.model');
 
 const passport = require('passport');
 const bcrypt = require('bcryptjs');
+const handlebars= require('hbs');
 
+const type = [{id: 1, name: 'Quản lý'},{id: 2, name: 'Thủ kho'},{id: 3, name: 'Bán hàng'}];
+
+handlebars.registerHelper("type_select",(selectedType,type_list)=>{
+	let html = "";
+	type_list.forEach(function(item) { 
+		if(item.id == selectedType)
+		{
+			html = html + '<option selected value="'+item.id+'">'+ item.name + '</option>';
+		}
+		else{
+			html = html + '<option value="'+item.id+'">'+item.name+'</option>';
+		} 
+	});
+	return new handlebars.SafeString(html);
+});
 
 module.exports.getLogin =  (req, res) => res.render('login', {title : 'Đăng nhập'});
 
@@ -17,13 +33,15 @@ module.exports.postLogin =  passport.authenticate('local', {
 	failureFlash: true
 });
 
+
 module.exports.account = (req, res) =>{
 	admins.find()
 	.then(function(admin){
 		res.render('account', {
 			title : 'Tài khoản',
 			admins: admin,
-			user: res.locals.user
+			user: res.locals.user,
+			type
 		});
 	});
 };
@@ -47,7 +65,7 @@ module.exports.employees = (req, res) =>{
 module.exports.signup = (req, res) => {
 	//console.log(req.user);
 	if(req.user.type === 1){
-		res.render('sign-up', {title : 'Tạo tài khoản', user: req.user});
+		res.render('sign-up', {title : 'Tạo tài khoản', user: req.user, type});
 	}else {
 		req.flash('error_msg', 'Bạn không được phép truy cập vào đây!');
 		res.redirect('/account');
@@ -325,6 +343,32 @@ module.exports.logout = (req, res) => {
 	res.redirect('/login');
 };
 
-module.exports.forgetPassword = function(req, res, next) {
+module.exports.forgetPassword = (req, res, next) => {
 	res.render('forget-password', {title : 'Quên mật khẩu'});
+};
+
+module.exports.showUser =  (req, res, next) => {
+	admins.findById(req.query.id, function (err, userData) {
+		//console.log(userData);
+		if (err) {
+			console.log("Can't show data\n");
+			res.sendStatus(500);
+		} else {
+			res.render('show-user', {title : 'Thông tin nhân viên', data: userData, type});
+		}
+	})
+}
+
+module.exports.editEmployee =  (req, res, next) => {
+	admins.findById(req.query.id, (err, user) => {
+		if (err) {
+			console.error('error, no entry found');
+		}
+		// console.log(user.type);
+		// console.log(req.body.type);
+		user.type = req.body.type;
+		// console.log(user.type);
+		user.save();
+	});
+	res.redirect('/employees');
 };
