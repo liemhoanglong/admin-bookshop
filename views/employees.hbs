@@ -3,16 +3,7 @@
     <div class="col-12 tm-block-col">
       <div class="tm-bg-primary-dark tm-block tm-block-h-auto">
         <h2 class="tm-block-title">Danh sách các tài khoản</h2>
-
-        <!-- only admin type 1 can see -->
-        <!-- <select class="custom-select">
-          <option value="0">chọn tài khoản</option>
-          {{# each admins}}
-          <option value="{{this.id}}">{{{this.name}}}</option>
-          {{/each}}
-        </select> 
-        <hr> -->
-        <table class="table table-striped">
+        <table class="table table-striped"> 
           <thead>
             <tr>
               <th >Tên</th>
@@ -23,23 +14,36 @@
               <th scope="col">&nbsp;</th>
             </tr>
           </thead>
+        </table>
+        <div class="tm-product-table-container">
+
+          <!-- only admin type 1 can see -->
+        <!-- <select class="custom-select">
+          <option value="0">chọn tài khoản</option>
+          {{# each admins}}
+          <option value="{{this.id}}">{{{this.name}}}</option>
+          {{/each}}
+        </select> 
+        <hr> -->
+        <table class="table table-striped">
           <tbody>
             {{# each admins}}
             <tr>
               <td class="tm-product-name"><a href="/show-user?id={{this.id}}" style="color:white;">{{this.name}}</td>
-              <td>{{this.email}}</td>
-              <td>{{this.phone}}</td>
-              <td>{{this.address}}</td>
-              <td>{{this.type}}</td>                                
-              <td>
-                <a href="/delete?id={{this.id}}" class="tm-product-delete-link">
-                  <i class="far fa-trash-alt tm-product-delete-icon"></i>
-                </a>
-              </td>
-            </tr>
-            {{/each}}
-          </tbody>
-        </table>
+                <td>{{this.email}}</td>
+                <td>{{this.phone}}</td>
+                <td>{{this.address}}</td>
+                <td>{{this.type}}</td>                                
+                <td>
+                  <a href="/delete?id={{this.id}}" class="tm-product-delete-link">
+                    <i class="far fa-trash-alt tm-product-delete-icon"></i>
+                  </a>
+                </td>
+              </tr>
+              {{/each}}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   </div>
