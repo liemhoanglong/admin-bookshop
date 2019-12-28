@@ -47,18 +47,36 @@ module.exports.account = (req, res) =>{
 };
 
 module.exports.employees = (req, res) =>{
+	const limit = 3;
+	let page;
+	if (req.query.page) {
+		page = req.query.page;
+	} else {
+		page = 1;
+	}
+	console.log(page);
+	let startIndex = (page - 1) * limit;  
+	let endIndex = page * limit;
 	admins.find()
 	.then(function(admin){
-		if(req.user.type === 1){
+		// if(req.user.type === 1){
+			console.log(admin);
+			let numberOfUser = admin.length;
+			console.log(numberOfUser);
+			console.log(startIndex);
+			console.log(endIndex);
+			admin = admin.slice(startIndex, endIndex);
+			console.log(admin);
 			res.render('employees', {
 				title : 'Tài khoản',
 				admins: admin,
-				user: res.locals.user
+				user: res.locals.user,
+				numberOfUser
 			});
-		}else {
-			req.flash('error_msg', 'Bạn không được phép truy cập vào đây!');
-			res.redirect('/account');
-		}
+		// }else {
+		// 	req.flash('error_msg', 'Bạn không được phép truy cập vào đây!');
+		// 	res.redirect('/account');
+		// }
 	});
 };
 
