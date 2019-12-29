@@ -66,6 +66,16 @@ handlebars.registerHelper("showcatagories",(catagoryID,catagories_list)=>{
 
 
 module.exports.showProduct = (req, res, next) => {
+	const limit = 6;
+	let page;
+	if (req.query.page) {
+		page = req.query.page;
+	} else {
+		page = 1;
+	}
+	//console.log(page);
+	let startIndex = (page - 1) * limit;  
+	let endIndex = page * limit;
 	//if (req.user.type === 3) {		
 		
 		// const[category, publisher, product] = 
@@ -85,7 +95,16 @@ module.exports.showProduct = (req, res, next) => {
 				//products.find().sort('title')
 				products.getAllProduct()
 				.then(function (product) {
-					res.render('products', {categories: category, publish: publisher, items: product, title : 'Danh sách sản phẩm'});
+					let numberOfUser = product.length;
+					product = product.slice(startIndex, endIndex);
+					res.render('products', {
+						categories: category, 
+						publish: publisher, 
+						items: product, 
+						title : 'Danh sách sản phẩm',
+						numberOfUser,				
+						page
+					});
 				});
 			});        
 		});

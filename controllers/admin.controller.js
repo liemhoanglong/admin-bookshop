@@ -59,7 +59,7 @@ module.exports.employees = (req, res) =>{
 	let endIndex = page * limit;
 	admins.find()
 	.then(function(admin){
-		// if(req.user.type === 1){
+		if(req.user.type === 1){
 			let numberOfUser = admin.length;
 			admin = admin.slice(startIndex, endIndex);
 			res.render('employees', {
@@ -69,10 +69,10 @@ module.exports.employees = (req, res) =>{
 				numberOfUser,
 				page
 			});
-		// }else {
-		// 	req.flash('error_msg', 'Bạn không được phép truy cập vào đây!');
-		// 	res.redirect('/account');
-		// }
+		}else {
+			req.flash('error_msg', 'Bạn không được phép truy cập vào đây!');
+			res.redirect('/account');
+		}
 	});
 };
 

@@ -19,8 +19,8 @@ router.post('/login', controllerUser.postLogin);
 router.get('/account', ensureAuthenticated, controllerUser.account);
 
 /* GET employees page. */
-//router.get('/employees', ensureAuthenticated, controllerUser.employees);
-router.get('/employees', controllerUser.employees);
+router.get('/employees', ensureAuthenticated, controllerUser.employees);
+// router.get('/employees', controllerUser.employees);
 
 
 /* GET sign up page. */

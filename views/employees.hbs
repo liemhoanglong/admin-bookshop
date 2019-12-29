@@ -3,20 +3,18 @@
     <div class="col-12 tm-block-col">
       <div class="tm-bg-primary-dark tm-block tm-block-h-auto">
         <h2 class="tm-block-title">Danh sách các tài khoản</h2>
-        <table class="table table-striped"> 
-          <thead>
-            <tr>
-              <th>Tên&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
-              <th>Email&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
-              <th>Số điện thoại&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
-              <th>Địa chỉ&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
-              <th>Loại&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
-              <th scope="col">Xóa&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
-            </tr>
-          </thead>
-        </table>
         <div class="tm-product-table-container">
           <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>Tên</th>
+                <th>Email</th>
+                <th>Số điện thoại</th>
+                <th>Địa chỉ</th>
+                <th>Loại</th>
+                <th scope="col">Xóa</th>
+              </tr>
+            </thead>
             <tbody>
               {{# each admins}}
               <tr>
@@ -39,15 +37,9 @@
         <div class="Pagination">
           <nav aria-label="Page navigation example">
             <ul class="pagination page-number text-center" style="justify-content: center;" id="page-number">
-              <!-- <li class="page-item page-previous"><a class="page-link" href="#">Previous</a></li>
-              <li class="page-item"><a class="page-link" href="/employees?page=1">1</a></li>
-              <li class="page-item"><a class="page-link" href="/employees?page=2">2</a></li>
-              <li class="page-item"><a class="page-link" href="/employees?page=3">3</a></li>
-              <li class="page-item page-next"><a class="page-link" href="#">Next</a></li> -->
             </ul>
           </nav>
-        </div> 
-        <div id="page"></div>
+        </div>
       </div>
     </div>
   </div>
@@ -59,8 +51,10 @@
 
 <script>
   $(document).ready(function (){
+    //string numberOfUser, pageNow
     let numberOfUser = '{{numberOfUser}}';
     let pageNow = '{{page}}';
+    //int limit, maxPage, pageLimit
     let limit = 3;
     let maxPage = Math.ceil(numberOfUser/limit);
     let pageLimit = 3;
