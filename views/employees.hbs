@@ -58,18 +58,59 @@
 <script src="js/bootstrap.min.js"></script>
 
 <script>
-   $(document).ready(function (){
+  $(document).ready(function (){
     let numberOfUser = '{{numberOfUser}}';
+    let pageNow = '{{page}}';
     let limit = 3;
-    // console.log(Math.floor(numberOfUser/limit));
-    let maxPage = Math.floor(numberOfUser/limit);
-    // console.log(maxPage);
-    for(let i = 0; i < maxPage ; i++){
-      let j=i+1;
-      // console.log(j);
-      $('#page-number').append("<li class='page-item'><a class='page-link' href=\"/employees?page="+j+"\">"+ j +"</a></li>");
+    let maxPage = Math.ceil(numberOfUser/limit);
+    let pageLimit = 3;
+    if (1 < pageNow && pageNow < maxPage) {
+      console.log('<>');
+      //nếu 1 < pageNow < maxPage thì << + số trang + >>  
+      // $('#page-number').append("<li class='page-item'><a class='page-link' href=\"/employees?page="+ --pageNow +"\">&lt;&lt;</a></li>");
+      //trang đầu
+      $('#page-number').append("<li class='page-item'><a class='page-link' href=\"/employees?page=1\">&lt;&lt;</a></li>");
+
+      //chuyển pageNow về int
+      pageNow--;
+      pageNow++;
+      for(let i = pageNow-2; i < pageNow+1; i++){
+        let j=i+1;
+        if (j === pageNow) {
+          $('#page-number').append("<li class='page-item'><a class='page-link page-active' href=\"/employees?page="+j+"\">"+ j +"</a></li>");
+        } else {
+          $('#page-number').append("<li class='page-item'><a class='page-link' href=\"/employees?page="+j+"\">"+ j +"</a></li>");
+        }
+      }
+      if (pageNow < maxPage) {
+        $('#page-number').append("<li class='page-item'><a class='page-link' href=\"/employees?page="+ maxPage +"\">&gt;&gt;</a></li>");
+      }
+      pageNow--;
+    } else if (pageNow == maxPage) {
+      console.log('==');
+
+      //nếu pageNow là trang trang cuối thì << + số trang cuối -2, -1, trang cuối
+      $('#page-number').append("<li class='page-item'><a class='page-link' href=\"/employees?page=1\">&lt;&lt;</a></li>");
+      pageNow--;
+      $('#page-number').append("<li class='page-item'><a class='page-link' href=\"/employees?page="+ --pageNow+"\">"+ pageNow +"</a></li>");
+      $('#page-number').append("<li class='page-item'><a class='page-link' href=\"/employees?page="+ ++pageNow+"\">"+ pageNow +"</a></li>");
+      $('#page-number').append("<li class='page-item'><a class='page-link page-active' href=\"/employees?page="+ ++pageNow+"\">"+ pageNow +"</a></li>");
+    } else {
+      //nếu là trang đầu tiên thì số trang + trang cuối
+      console.log('=1');
+
+      //nếu pageNow = 1 thì số trang + >>  
+      for(let i = 0; i < pageLimit ; i++){
+        let j=i+1;
+        if (j == pageNow) {
+          $('#page-number').append("<li class='page-item'><a class='page-link page-active' href=\"/employees?page="+j+"\">"+ j +"</a></li>");
+        } else {
+          $('#page-number').append("<li class='page-item'><a class='page-link' href=\"/employees?page="+j+"\">"+ j +"</a></li>");
+        }
+      }
+      $('#page-number').append("<li class='page-item'><a class='page-link' href=\"/employees?page="+ maxPage +"\">&gt;&gt;</a></li>");
+      pageNow--;
     }
-    // console.log(numberOfUser);
   })
-  
+
 </script>

@@ -40,3 +40,12 @@
 .table-price{
   padding-right: 0px!important;
 }
+
+a.page-link {
+  background-color: #567086;
+  color: white;
+}
+.page-active{
+  background-color: #394e64!important;
+
+}

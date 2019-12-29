@@ -54,24 +54,20 @@ module.exports.employees = (req, res) =>{
 	} else {
 		page = 1;
 	}
-	console.log(page);
+	//console.log(page);
 	let startIndex = (page - 1) * limit;  
 	let endIndex = page * limit;
 	admins.find()
 	.then(function(admin){
 		// if(req.user.type === 1){
-			console.log(admin);
 			let numberOfUser = admin.length;
-			console.log(numberOfUser);
-			console.log(startIndex);
-			console.log(endIndex);
 			admin = admin.slice(startIndex, endIndex);
-			console.log(admin);
 			res.render('employees', {
 				title : 'Tài khoản',
 				admins: admin,
 				user: res.locals.user,
-				numberOfUser
+				numberOfUser,
+				page
 			});
 		// }else {
 		// 	req.flash('error_msg', 'Bạn không được phép truy cập vào đây!');
