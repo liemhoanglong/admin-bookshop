@@ -34,9 +34,10 @@ module.exports.getProductByID = (id) =>{
 module.exports.deleteProductByID = (id) =>{
   // console.log('delete ' + id);
   // return products.findByIdAndRemove(id);
-  products.findById(id, function(err, data){
-  	data.remove();
-  });
+  products.findById(id).remove().exec();
+  // , function(err, data){
+  // 	data.remove();
+  // });
 }
 
 

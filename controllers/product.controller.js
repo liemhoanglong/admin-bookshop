@@ -207,3 +207,77 @@ module.exports.updateProduct = async(req, res, next) => {
 	}
 	res.redirect('/products');
 }
+
+module.exports.insertCategory = (req, res, next) => {
+	const temp = {
+		categoriesID: req.body.code,
+		categories: req.body.name
+	}
+	//categories.findOne({categoriesID: temp.categoriesID})
+	categories.checkCategories(temp.categoriesID)
+	.then(check => {
+		if (check) {
+			console.log('category đã tồn tại');
+			return;
+		} else {
+			let data = new categories(temp);
+			console.log(data);
+			data.save();
+		}
+	});
+	res.redirect('/products');
+}
+
+module.exports.insertPublisher = (req, res, next) => {
+	const temp = {
+		publisherID: req.body.code,
+		publisher: req.body.name
+	}
+	publishers.checkPublisher(temp.publisherID)
+	.then(check => {
+		if (check) {
+			console.log('publisher đã tồn tại');
+		} else {
+			let data = new publishers(temp);
+			console.log(data);
+			data.save();
+		}
+	})
+	res.redirect('/products');
+}
+
+module.exports.editCategory = (req, res, next) => {
+	//console.log(req.query.id);
+	categories.getCategoryByID(req.query.id)
+	.then (data => {
+		//console.log(req.body.code);
+		//console.log(req.body.name);
+		//console.log(data);
+		data.categoriesID = req.body.code;
+		data.categories = req.body.name;
+		data.save();
+	})
+	res.redirect('/products');
+}
+
+module.exports.editPublisher = (req, res, next) => {
+	//console.log(req.query.id);
+	//publishers.findById(req.query.id)
+	publishers.getPublisherByID(req.query.id)
+	.then (data => {
+		data.publisherID = req.body.code;
+		data.publisher = req.body.name;
+		data.save();
+	})
+	res.redirect('/products');
+}
+
+module.exports.deleteCategory = (req, res, next) => {
+	categories.deleteCategoryByID(req.query.id)
+		res.redirect('/products');
+}
+
+module.exports.deletePublisher = (req, res, next) => {
+	publishers.deletePublisherByID(req.query.id)
+		res.redirect('/products');
+}

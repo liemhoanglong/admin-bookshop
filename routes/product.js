@@ -31,28 +31,10 @@ router.get('/product-delete', controllerProduct.deleteProduct);
 
 
 /* POST insert-category page. */
-router.post('/insert-category', (req, res, next) => {
-	const temp = {
-		categoriesID: req.body.code,
-		categories: req.body.name
-	}
-	let data = new categories(temp);
-	console.log(data);
-	data.save();
-	res.redirect('/products');
-});
+router.post('/insert-category', controllerProduct.insertCategory);
 
 /* POST insert-publisher page. */
-router.post('/insert-publisher', (req, res, next) => {
-	const temp = {
-		publisherID: req.body.code,
-		publisher: req.body.name
-	}
-	let data = new publishers(temp);
-	console.log(data);
-	data.save();
-	res.redirect('/products');
-});
+router.post('/insert-publisher', controllerProduct.insertPublisher);
 
 
 /* POST edit-product page. */
@@ -60,46 +42,17 @@ router.post('/edit-product', controllerProduct.updateProduct);
 
 
 /* POST edit-category page. */
-router.post('/edit-category', (req, res, next) => {
-	//console.log(req.query.id);
-	categories.findById(req.query.id)
-	.then (data => {
-		//console.log(req.body.code);
-		//console.log(req.body.name);
-		//console.log(data);
-		data.categoriesID = req.body.code;
-		data.categories = req.body.name;
-		data.save();
-	})
-	res.redirect('/products');
-});
+router.post('/edit-category', controllerProduct.editCategory);
 
 /* POST edit-publisher page. */
-router.post('/edit-publisher', (req, res, next) => {
-	//console.log(req.query.id);
-	publishers.findById(req.query.id)
-	.then (data => {
-		data.publisherID = req.body.code;
-		data.publisher = req.body.name;
-		data.save();
-	})
-	res.redirect('/products');
-});
+router.post('/edit-publisher', controllerProduct.editPublisher);
 
 
 /* GET category delete page. */
-router.get('/category-delete', function (req, res, next) {
-	categories.findByIdAndRemove(req.query.id, (err) => {
-		res.redirect('/products');
-	});
-});
+router.get('/category-delete', controllerProduct.deleteCategory);
 
 /* GET publisher delete page. */
-router.get('/publisher-delete', function (req, res, next) {
-	publishers.findByIdAndRemove(req.query.id, (err) => {
-		res.redirect('/products');
-	});
-});
+router.get('/publisher-delete', controllerProduct.deletePublisher);
 
 
 module.exports = router;

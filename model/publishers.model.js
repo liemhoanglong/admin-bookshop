@@ -16,8 +16,25 @@ var publisherSchema = new mongoose.Schema({
 
 //4.tạo model
 var publishers = mongoose.model('publishers', publisherSchema);
-//module.exports = publishers;
+module.exports = publishers;
 
 module.exports.getAllPublisher = function() {
   return publishers.find().sort('publisher');
+}
+
+module.exports.checkPublisher = (temp) => {
+  return publishers.findOne({publisherID: temp});
+}
+
+module.exports.getPublisherByID = (id) => {
+  return publishers.findById(id);
+}
+
+module.exports.deletePublisherByID = (id) =>{
+  // console.log('delete ' + id);
+  // return products.findByIdAndRemove(id);
+  publishers.findById(id).remove().exec();
+  // , function(err, data){
+  // 	data.remove();
+  // });
 }

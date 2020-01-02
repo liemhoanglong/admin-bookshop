@@ -15,10 +15,26 @@ var categoriesSchema = new mongoose.Schema({
 }, { collection: 'categories' });
 
 //4.tạo model
-
 var categories = mongoose.model('categories', categoriesSchema);
-// module.exports = categories;
+module.exports = categories;
 
 module.exports.getAllCategories = function() {
   return categories.find().sort('categories');
+}
+
+module.exports.checkCategories = (temp) => {
+  return categories.findOne({categoriesID: temp});
+}
+
+module.exports.getCategoryByID = (id) => {
+  return categories.findById(id);
+}
+
+module.exports.deleteCategoryByID = (id) =>{
+  // console.log('delete ' + id);
+  // return products.findByIdAndRemove(id);
+  categories.findById(id).remove().exec();
+  // , function(err, data){
+  // 	data.remove();
+  // });
 }
