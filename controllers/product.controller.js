@@ -6,6 +6,7 @@ const admins = require('../model/admins.model');
 const passport = require('passport');
 const bcrypt = require('bcryptjs');
 const handlebars= require('hbs');
+const multer = require('multer');
 
 let error;
 let success_msg;
@@ -130,6 +131,26 @@ module.exports.addProduct = async (req, res, next) => {
 	res.render('add-product', {title : 'Thêm sản phẩm mới', publisher: publisher, category: category});
 }
 
+module.exports.insertProduct = (req, res, next) => {
+	let category = req.body.categories;
+	// convert req.body.categories to array
+	let arraycategory = category.split(',');
+	const temp = {
+		title: req.body.name,
+		price: req.body.price,
+		author: req.body.author,
+		info: req.body.info,
+		categoriesID: arraycategory,
+		publisher: req.body.publisher
+	}
+	let data = products.createProduct(temp.title, temp.price, temp.author, temp.info, temp.categoriesID, temp.publisher);
+	console.log(data);
+	data.save();
+	success_msg = 'Thêm sản phẩm thành công';
+	error = '';
+	res.redirect('/products');
+}
+
 module.exports.editProduct = async (req, res, next) => {
 	if(req.query.id){
 		try {
@@ -151,42 +172,6 @@ module.exports.editProduct = async (req, res, next) => {
 	}
 };
 
-module.exports.deleteProduct = (req, res, next) => {
-	if(req.query.id){
-		try {
-			products.deleteProductByID(req.query.id);
-			success_msg = 'Xóa sản phẩm thành công';
-			error = '';
-			res.redirect('/products');
-		} catch (error) {
-			console.log(error);
-			res.sendStatus(500);
-		}
-	}else{
-		console.log("Can't show item\n");
-		res.sendStatus(500);
-	}
-}
-
-module.exports.insertProduct = (req, res, next) => {
-	let category = req.body.categories;
-	// convert req.body.categories to array
-	let arraycategory = category.split(',');
-	const temp = {
-		title: req.body.name,
-		price: req.body.price,
-		author: req.body.author,
-		info: req.body.info,
-		categoriesID: arraycategory,
-		publisher: req.body.publisher
-	}
-	let data = products.createProduct(temp.title, temp.price, temp.author, temp.info, temp.categoriesID, temp.publisher);
-	console.log(data);
-	data.save();
-	success_msg = 'Thêm sản phẩm thành công';
-	error = '';
-	res.redirect('/products');
-}
 
 module.exports.updateProduct = async(req, res, next) => {
 	if(req.query.id){
@@ -196,9 +181,9 @@ module.exports.updateProduct = async(req, res, next) => {
 			data.title = req.body.name;
 			data.price = req.body.price;
 			data.author = req.body.author;
-			let category= req.body.categories;
+			let category = req.body.categories;
 			// convert req.body.categories to array
-			let arraycategory= category.split(',');
+			let arraycategory = category.split(',');
 			data.categoriesID = arraycategory;
 			data.publisherID = req.body.publisher;
 			data.info = req.body.info;
@@ -218,6 +203,51 @@ module.exports.updateProduct = async(req, res, next) => {
 	}
 	res.redirect('/products');
 }
+
+
+module.exports.uploadImgProduct = async (req, res, next) => {
+	console.log(req.file);
+	// res.send("up anh thanh cong");
+	if(req.query.id){
+		try {let data = await products.getProductByID(req.query.id);
+			let temp = '/uploads/' + req.file.filename;
+			console.log(temp);
+			// data.imgDir[0] = temp;
+			console.log(data);
+			data.imgDir.push(temp);
+			console.log(data.imgDir);
+			data.save();
+			success_msg = 'Thêm ảnh sản phẩm thành công';
+			error = '';
+		} catch (error) {
+			console.log(error);
+			res.sendStatus(500);
+		}
+	}else{
+		console.log("Can't show item\n");
+		res.sendStatus(500);
+	}
+	res.redirect('/products');
+}
+
+module.exports.deleteProduct = (req, res, next) => {
+	if(req.query.id){
+		try {
+			products.deleteProductByID(req.query.id);
+			success_msg = 'Xóa sản phẩm thành công';
+			error = '';
+			res.redirect('/products');
+		} catch (error) {
+			console.log(error);
+			res.sendStatus(500);
+		}
+	}else{
+		console.log("Can't show item\n");
+		res.sendStatus(500);
+	}
+}
+
+
 
 module.exports.insertCategory = (req, res, next) => {
 	const temp = {
@@ -265,6 +295,7 @@ module.exports.insertPublisher = (req, res, next) => {
 	res.redirect('/products');
 }
 
+
 module.exports.editCategory = (req, res, next) => {
 	//console.log(req.query.id);
 	categories.getCategoryByID(req.query.id)
@@ -296,6 +327,7 @@ module.exports.editPublisher = (req, res, next) => {
 	})
 	res.redirect('/products');
 }
+
 
 module.exports.deleteCategory = (req, res, next) => {
 	categories.deleteCategoryByID(req.query.id)

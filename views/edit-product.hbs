@@ -63,14 +63,21 @@
                         {{#each item.img}}
                         <div class="tm-product-img-edit mx-auto">
                             <img src="{{this}}" alt="Product image" class="img-fluid d-block mx-auto">
-                            <i class="fas fa-cloud-upload-alt tm-upload-icon"
-                            onclick="document.getElementById('fileInput').click();"></i>
                         </div>
                         {{/each}}
+
+                        {{#if item.imgDir}}
+                        {{#each item.imgDir}}
+                        <div class="tm-product-img-edit mx-auto">
+                            <img src="{{this}}" alt="Product image" class="img-fluid d-block mx-auto">
+                        </div>
+                        {{/each}}
+                        {{/if}}
                         <div class="custom-file mt-3 mb-3">
-                            <input id="fileInput" type="file" style="display:none;" />
-                            <input type="button" class="btn btn-primary btn-block mx-auto" value="CHANGE IMAGE NOW"
-                            onclick="document.getElementById('fileInput').click();" />
+                            <form action="/upload?id={{item.id}}" method="POST" enctype="multipart/form-data">
+                                <input id="fileInput" type="file" name="img" value="Chọn ảnh từ máy tính"/>
+                                <input type="submit" class="btn btn-primary btn-block mx-auto" value="Tải ảnh lên"/>
+                            </form>
                         </div>
                     </div>
                     <div class="col-6">

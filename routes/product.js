@@ -7,6 +7,8 @@ const admins =require('../model/admins.model');
 const products =require('../model/products.model');
 const categories =require('../model/categories.model');
 const publishers =require('../model/publishers.model');
+const multer = require('multer');
+
 
 const { ensureAuthenticated, forwardAuthenticated } = require('../config/auth');
 
@@ -25,6 +27,23 @@ router.post('/insert-product', controllerProduct.insertProduct);
 /* GET edit-product page. */
 router.get('/edit-product', controllerProduct.editProduct);
 
+/* POST edit-product page. */
+router.post('/edit-product', controllerProduct.updateProduct);
+
+var storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, 'public/uploads')
+  },
+  filename: function (req, file, cb) {
+    cb(null, file.originalname)
+  }
+})
+ 
+var upload = multer({storage: storage })
+
+/* POST upload-product page. */
+router.post('/upload', upload.single('img'), controllerProduct.uploadImgProduct);
+
 /* GET product delete */
 router.get('/product-delete', controllerProduct.deleteProduct);
 
@@ -35,10 +54,6 @@ router.post('/insert-category', controllerProduct.insertCategory);
 
 /* POST insert-publisher page. */
 router.post('/insert-publisher', controllerProduct.insertPublisher);
-
-
-/* POST edit-product page. */
-router.post('/edit-product', controllerProduct.updateProduct);
 
 
 /* POST edit-category page. */

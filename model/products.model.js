@@ -16,7 +16,8 @@ var productsSchema = new mongoose.Schema({
 	categoriesID: [String],
 	publisherID: String,
 	info: String,
-	img: [String]
+	img: [String],
+	imgDir: [String]
 }, { collection: 'products' });
 
 //4.tạo model
