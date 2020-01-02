@@ -7,6 +7,10 @@ const passport = require('passport');
 const bcrypt = require('bcryptjs');
 const handlebars= require('hbs');
 
+let error;
+let success_msg;
+
+
 handlebars.registerHelper("publisher_select",(selectedpublisherID,publisher_list)=>{
 	let html = "";
 	publisher_list.forEach(function(item) { 
@@ -103,7 +107,9 @@ module.exports.showProduct = (req, res, next) => {
 						items: product, 
 						title : 'Danh sách sản phẩm',
 						numberOfUser,				
-						page
+						page,
+						error,
+						success_msg
 					});
 				});
 			});        
@@ -126,9 +132,8 @@ module.exports.addProduct = async (req, res, next) => {
 
 module.exports.editProduct = async (req, res, next) => {
 	if(req.query.id){
-
 		try {
-			const[dataProduct,publisher,category]= 
+			const[dataProduct,publisher,category] = 
 			await Promise.all([
 				products.getProductByID(req.query.id),
 				publishers.getAllPublisher(),
@@ -136,7 +141,6 @@ module.exports.editProduct = async (req, res, next) => {
 				]);
 			// console.log(category);
 			res.render('edit-product', {title : 'Chỉnh sửa sản phẩm', item: dataProduct, publisher: publisher, category: category});
-
 		} catch (error) {
 			console.log(error);
 			res.sendStatus(500);
@@ -151,6 +155,8 @@ module.exports.deleteProduct = (req, res, next) => {
 	if(req.query.id){
 		try {
 			products.deleteProductByID(req.query.id);
+			success_msg = 'Xóa sản phẩm thành công';
+			error = '';
 			res.redirect('/products');
 		} catch (error) {
 			console.log(error);
@@ -177,6 +183,8 @@ module.exports.insertProduct = (req, res, next) => {
 	let data = products.createProduct(temp.title, temp.price, temp.author, temp.info, temp.categoriesID, temp.publisher);
 	console.log(data);
 	data.save();
+	success_msg = 'Thêm sản phẩm thành công';
+	error = '';
 	res.redirect('/products');
 }
 
@@ -197,6 +205,9 @@ module.exports.updateProduct = async(req, res, next) => {
 			data.save();
 			// console.log("data after edit")
 			// console.log(data);
+
+			success_msg = 'Chỉnh sửa sản phẩm thành công';
+			error = '';
 		} catch (error) {
 			console.log(error);
 			res.sendStatus(500);
@@ -217,12 +228,16 @@ module.exports.insertCategory = (req, res, next) => {
 	categories.checkCategories(temp.categoriesID)
 	.then(check => {
 		if (check) {
+			error = 'Thể loại đã tồn tại';
+			success_msg = '';
 			console.log('category đã tồn tại');
 			return;
 		} else {
 			let data = new categories(temp);
 			console.log(data);
 			data.save();
+			success_msg = 'Thêm thể loại thành công';
+			error = '';
 		}
 	});
 	res.redirect('/products');
@@ -236,11 +251,15 @@ module.exports.insertPublisher = (req, res, next) => {
 	publishers.checkPublisher(temp.publisherID)
 	.then(check => {
 		if (check) {
-			console.log('publisher đã tồn tại');
+			error = 'publisher đã tồn tại';
+			success_msg = '';
+			console.log('NBX đã tồn tại');
 		} else {
 			let data = new publishers(temp);
 			console.log(data);
 			data.save();
+			success_msg = 'Thêm NBX thành công';
+			error = '';
 		}
 	})
 	res.redirect('/products');
@@ -253,9 +272,13 @@ module.exports.editCategory = (req, res, next) => {
 		//console.log(req.body.code);
 		//console.log(req.body.name);
 		//console.log(data);
+
 		data.categoriesID = req.body.code;
 		data.categories = req.body.name;
 		data.save();
+		success_msg = 'Chỉnh sửa thể loại thành công';
+		error = '';
+		
 	})
 	res.redirect('/products');
 }
@@ -268,16 +291,22 @@ module.exports.editPublisher = (req, res, next) => {
 		data.publisherID = req.body.code;
 		data.publisher = req.body.name;
 		data.save();
+		success_msg = 'Chỉnh sửa NBX thành công';
+		error = '';
 	})
 	res.redirect('/products');
 }
 
 module.exports.deleteCategory = (req, res, next) => {
 	categories.deleteCategoryByID(req.query.id)
-		res.redirect('/products');
+	success_msg = 'Xóa Thể loại thành công';
+	error = '';
+	res.redirect('/products');
 }
 
 module.exports.deletePublisher = (req, res, next) => {
 	publishers.deletePublisherByID(req.query.id)
-		res.redirect('/products');
+	success_msg = 'Xóa NBX thành công';
+	error = '';
+	res.redirect('/products');
 }
