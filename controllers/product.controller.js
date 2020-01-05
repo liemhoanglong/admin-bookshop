@@ -120,6 +120,8 @@ module.exports.showProduct = (req, res, next) => {
 	// 	req.flash('error_msg', 'Bạn không được phép truy cập vào đây!');
 	// 		res.redirect('/account');
 	// }
+	error = '';
+	success_msg = '';
 }
 
 module.exports.addProduct = async (req, res, next) => {
@@ -209,7 +211,8 @@ module.exports.uploadImgProduct = async (req, res, next) => {
 	console.log(req.file);
 	// res.send("up anh thanh cong");
 	if(req.query.id){
-		try {let data = await products.getProductByID(req.query.id);
+		try {
+			let data = await products.getProductByID(req.query.id);
 			let temp = '/uploads/' + req.file.filename;
 			console.log(temp);
 			// data.imgDir[0] = temp;
@@ -227,7 +230,78 @@ module.exports.uploadImgProduct = async (req, res, next) => {
 		console.log("Can't show item\n");
 		res.sendStatus(500);
 	}
-	res.redirect('/products');
+	let temp = '/edit-product?id=' + req.query.id;
+	res.redirect(temp);
+}
+
+module.exports.addLinkImg = async (req, res, next) => {
+	if(req.query.id){
+		try {
+			let data = await products.getProductByID(req.query.id);
+			console.log(data);
+			data.img.push(req.body.link_img);
+			data.save();
+			console.log(data);
+
+			success_msg = 'Thêm ảnh sản phẩm thành công';
+			error = '';
+			let temp = '/edit-product?id=' + req.query.id;
+			res.redirect(temp);
+		} catch (error) {
+			console.log(error);
+			res.sendStatus(500);
+		}
+	}else{
+		console.log("Can't show item\n");
+		res.sendStatus(500);
+	}
+}
+
+module.exports.deleteLinkImg = async (req, res, next) => {
+	console.log(req.query.img);
+	if(req.query.id){
+		try {
+			let data = await products.getProductByID(req.query.id);
+			console.log(data);
+			data.img.splice(data.img.indexOf(req.query.img),1);
+			data.save();
+			console.log(data);
+
+			success_msg = 'Xóa link ảnh sản phẩm thành công';
+			error = '';
+			let temp = '/edit-product?id=' + req.query.id;
+			res.redirect(temp);
+		} catch (error) {
+			console.log(error);
+			res.sendStatus(500);
+		}
+	}else{
+		console.log("Can't show item\n");
+		res.sendStatus(500);
+	}
+}
+
+module.exports.deleteImg = async (req, res, next) => {
+	if(req.query.id){
+		console.log(req.query.img);
+		try {
+			let data = await products.getProductByID(req.query.id);
+			console.log(data);
+			data.imgDir.splice(data.imgDir.indexOf(req.query.img),1);
+			data.save();
+			console.log(data);
+			success_msg = 'Xóa ảnh sản phẩm thành công';
+			error = '';
+			let temp = '/edit-product?id=' + req.query.id;
+			res.redirect(temp);
+		} catch (error) {
+			console.log(error);
+			res.sendStatus(500);
+		}
+	}else{
+		console.log("Can't show item\n");
+		res.sendStatus(500);
+	}
 }
 
 module.exports.deleteProduct = (req, res, next) => {
@@ -246,6 +320,7 @@ module.exports.deleteProduct = (req, res, next) => {
 		res.sendStatus(500);
 	}
 }
+
 
 
 

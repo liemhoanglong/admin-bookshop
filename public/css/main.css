@@ -47,5 +47,10 @@ a.page-link {
 }
 .page-active{
   background-color: #394e64!important;
-
 }
+
+.tm-product-table-container-img {
+    max-height: 600px;
+    margin-bottom: 15px;
+    overflow-y: scroll;
+  }

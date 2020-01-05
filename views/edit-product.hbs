@@ -58,25 +58,38 @@
                             <br>
                         </form>
                     </div>
-                    <div class="col-xl-6 col-lg-6 col-md-12 mx-auto mb-4">
+                    <div class="col-xl-6 col-lg-6 col-md-12 mx-auto mb-4" id="item.id">
+                        <div class="tm-product-table-container-img">
+                            {{#each item.img}}
+                            <div class="tm-product-img-edit mx-auto">
+                                <a href="/delete-link-img?img={{this}}&id=" class="custom-link" style="color: #F5A623;">Xóa ảnh bên dưới</a>
+                                <img src="{{this}}" alt="Product image" class="img-fluid d-block mx-auto">
+                            </div>
+                            {{/each}}
 
-                        {{#each item.img}}
-                        <div class="tm-product-img-edit mx-auto">
-                            <img src="{{this}}" alt="Product image" class="img-fluid d-block mx-auto">
+                            {{#if item.imgDir}}
+                            {{#each item.imgDir}}
+                            <div class="tm-product-img-edit mx-auto">
+                                <a href="/delete-img?img={{this}}&id=" class="custom-link" style="color: #F5A623;">Xóa ảnh bên dưới</a>
+                                <img src="{{this}}" alt="Product image" class="img-fluid d-block mx-auto">
+                            </div>
+                            {{/each}}
+                            {{/if}}
                         </div>
-                        {{/each}}
-
-                        {{#if item.imgDir}}
-                        {{#each item.imgDir}}
-                        <div class="tm-product-img-edit mx-auto">
-                            <img src="{{this}}" alt="Product image" class="img-fluid d-block mx-auto">
-                        </div>
-                        {{/each}}
-                        {{/if}}
                         <div class="custom-file mt-3 mb-3">
                             <form action="/upload?id={{item.id}}" method="POST" enctype="multipart/form-data">
-                                <input id="fileInput" type="file" name="img" value="Chọn ảnh từ máy tính"/>
+                                <!-- <input id="fileInput" type="file" name="img"  value="Chọn ảnh từ máy tính"/> -->
+                                <br>
+                                <input type="file" class="custom-file-input" id="fileInput" name="img">
+                                <label class="custom-file-label" for="fileInput">Chọn ảnh từ máy tính</label>
                                 <input type="submit" class="btn btn-primary btn-block mx-auto" value="Tải ảnh lên"/>
+                            </form>
+                            <br>
+                            <form action="/add-link-img?id={{item.id}}" method="POST">
+                                <input id="link_img" name="link_img" type="text" class="form-control validate" />
+                                <br>
+                                <button type="submit" class="btn btn-primary btn-block text-uppercase">Thêm link ảnh</button>
+                                <br>
                             </form>
                         </div>
                     </div>
@@ -96,5 +109,21 @@
 <script src="jquery-ui-datepicker/jquery-ui.min.js"></script>
 <!-- https://jqueryui.com/download/ -->
 <script src="js/bootstrap.min.js"></script>
+
+<script>
+//add link
+$(document).ready(function() {
+    let array = document.getElementsByClassName("custom-link");
+    for (const i of array)
+        i.href += '{{item.id}}';
+})
+</script>
+<script>
+// Add the following code if you want the name of the file appear on select
+$(".custom-file-input").on("change", function() {
+    var fileName = $(this).val().split("\\").pop();
+    $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+});
+</script>
 
 <!-- https://getbootstrap.com/ -->

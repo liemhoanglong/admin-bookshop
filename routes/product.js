@@ -14,6 +14,17 @@ const { ensureAuthenticated, forwardAuthenticated } = require('../config/auth');
 
 const controllerProduct =require('../controllers/product.controller');
 
+var storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, 'public/uploads')
+  },
+  filename: function (req, file, cb) {
+    cb(null, file.originalname)
+  }
+})
+ 
+var upload = multer({storage: storage })
+
 /* GET products page. */
 //router.get('/products', ensureAuthenticated, controllerProduct.showProduct);
 router.get('/products', controllerProduct.showProduct);
@@ -30,24 +41,20 @@ router.get('/edit-product', controllerProduct.editProduct);
 /* POST edit-product page. */
 router.post('/edit-product', controllerProduct.updateProduct);
 
-var storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, 'public/uploads')
-  },
-  filename: function (req, file, cb) {
-    cb(null, file.originalname)
-  }
-})
- 
-var upload = multer({storage: storage })
-
-/* POST upload-product page. */
+/* POST upload img product page. */
 router.post('/upload', upload.single('img'), controllerProduct.uploadImgProduct);
+
+/* POST add link img product */
+router.post('/add-link-img', controllerProduct.addLinkImg);
+
+/* GET delete link img */
+router.get('/delete-link-img', controllerProduct.deleteLinkImg);
+
+/* GET delete dir img */
+router.get('/delete-img', controllerProduct.deleteImg);
 
 /* GET product delete */
 router.get('/product-delete', controllerProduct.deleteProduct);
-
-
 
 /* POST insert-category page. */
 router.post('/insert-category', controllerProduct.insertCategory);
