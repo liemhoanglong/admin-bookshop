@@ -387,8 +387,8 @@ module.exports.showUser =  (req, res, next) => {
 			console.log("Can't show data\n");
 			res.sendStatus(500);
 		} else {
-			console.log(req.query.id);
-			console.log(res.locals.user.id);
+			// console.log(req.query.id);
+			// console.log(res.locals.user.id);
 			if (req.query.id == res.locals.user.id) {
 				let isMe = 1;
 				res.render('show-user', {title : 'Thông tin nhân viên', data: userData, type, lock, isMe});

@@ -53,4 +53,8 @@ a.page-link {
     max-height: 600px;
     margin-bottom: 15px;
     overflow-y: scroll;
-  }
+}
+
+.tm-block-order{
+    min-height: 1200px;
+}

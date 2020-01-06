@@ -1,0 +1,63 @@
+<div class="container mt-5">
+    <div class="row tm-content-row">
+        <div class="col-sm-12 col-md-12 tm-block-col">
+            <div class="tm-bg-primary-dark tm-block tm-block-products">
+                <h2 class="tm-block-title">Danh sách đơn hàng</h2>
+                <div class="tm-product-table-container">
+                    <table class="table table-hover tm-table-small tm-product-table table-striped">
+                        <thead>
+                            <tr>
+                                <th scope="col">Mã đơn hàng</th>
+                                <th scope="col" class="table-price">Trạng thái</th>
+                                <th scope="col">Địa chỉ</th>
+                                <!-- <th scope="col">Số lượng</th> -->
+                                <th scope="col">Ngày tạo</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {{# each order}}
+                            <tr>
+                                <td class="tm-product-name"><a href="/orders-detail?id={{this.id}}" style="color:white;">{{this.id}}</a></td>
+                                <td>{{this.status}}</td>
+                                <td>{{this.address}}</td>
+                                <td class="time">{{this.timeline.ordering}}</td>
+                            </tr>
+                            {{/ each}}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="js/jquery-3.3.1.min.js"></script>
+<!-- https://jquery.com/download/ -->
+<script src="jquery-ui-datepicker/jquery-ui.min.js"></script>
+<!-- https://jqueryui.com/download/ -->
+<script src="js/bootstrap.min.js"></script>
+<script>
+//convert timeline to date
+$(document).ready(function() {
+    let array = document.getElementsByClassName("time");
+    for (const i of array){
+        console.log(i.innerHTML);
+        console.log(timeConverter(i.innerHTML));
+        i.innerHTML = timeConverter(parseInt(i.innerHTML));
+    }
+        
+})
+
+function timeConverter(UNIX_timestamp){
+  var a = new Date(UNIX_timestamp);
+  var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  var year = a.getFullYear();
+  var month = months[a.getMonth()];
+  var date = a.getDate();
+  var hour = a.getHours();
+  var min = a.getMinutes();
+  var sec = a.getSeconds();
+  var time = date + ' ' + month + ' ' + year + ' ' + hour + ':' + min + ':' + sec ;
+  return time;
+}
+
+</script>

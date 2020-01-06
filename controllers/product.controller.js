@@ -81,7 +81,7 @@ module.exports.showProduct = (req, res, next) => {
 	//console.log(page);
 	let startIndex = (page - 1) * limit;  
 	let endIndex = page * limit;
-	//if (req.user.type === 3) {		
+	if (req.user.type === 3) {		
 		
 		// const[category, publisher, product] = 
 		// await Promise.all([
@@ -116,10 +116,10 @@ module.exports.showProduct = (req, res, next) => {
 			});        
 		});
 
-	// } else {
-	// 	req.flash('error_msg', 'Bạn không được phép truy cập vào đây!');
-	// 		res.redirect('/account');
-	// }
+	} else {
+		req.flash('error_msg', 'Bạn không được phép truy cập vào đây!');
+			res.redirect('/account');
+	}
 	error = '';
 	success_msg = '';
 }

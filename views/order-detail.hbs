@@ -1,0 +1,97 @@
+<div class="container mt-5">
+  <!-- row -->
+  <div class="row tm-content-row">
+    <div class="col-sm-12 col-md-12 tm-block-col">
+      <div class="tm-bg-primary-dark tm-block tm-block-order">
+        <h2 class="tm-block-title">Chi tiết đơn hàng</h2>
+        <form  action="/update-order?id={{order.id}}"  method="POST"  class="tm-signup-form row">
+          <div class="form-group col-lg-6">
+            <label for="id">Mã đơn hàng: <span style="color:#F5A623;">{{order.id}}</span> </label><hr>
+          </div>
+          <hr>
+          <div class="form-group col-lg-6">
+            <label for="name">Người mua: <span style="color:#F5A623;">{{order.name}}</span></label><hr>
+          </div>
+          <hr>
+          <div class="form-group col-lg-6">
+            <label for="phone">Số điện thoại: <span style="color:#F5A623;">{{order.phone}}</span></label><hr>
+          </div>
+          <hr> 
+          <div class="form-group col-lg-6">
+            <label for="shipping">Đơn vị giao hàng: <span style="color:#F5A623;">{{order.shipping}}</span></label><hr>
+          </div>
+          
+          <div class="form-group col-lg-6">
+            <label for="timeline">Ngày tạo đơn: <span id="timeline" style="color:#F5A623;">{{order.timeline.ordering}}</span></label><hr>
+          </div>
+          <hr>
+          <div class="form-group col-lg-6">
+            <label for="status">Trạng thái: (<span style="color:#F5A623;">*</span>)</label>
+            <select name="status" class="custom-select tm-select-accounts">{{status_select order.status status}}</select> 
+          </div> 
+          <hr>
+          <div class="form-group col-lg-12">
+            <label for="address">Địa chỉ: <span style="color:#F5A623;">{{order.address}}</span></label><hr>
+          </div>
+          <hr>
+          <div class="form-group col-lg-12">
+            <div class="tm-product-table-container">
+              <table class="table table-hover tm-table-small tm-product-table table-striped">
+                <thead>
+                  <tr>
+                    <th scope="col">Mã sản phẩm</th>
+                    <th scope="col">Tên sản phẩm</th>
+                    <th scope="col" class="table-price">Đơn giá</th>
+                    <th scope="col">Số lượng</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {{#each order.items}}
+                  <tr>
+                    <td class="tm-product-name">{{this.productID}}</td>
+                    <td>{{this.quantity}}</td>
+                  </tr>
+                  {{/each}}
+                </tbody>
+              </table>  
+            </div>
+          </div>
+          <hr>
+          <div class="form-group col-lg-9"></div>
+          <div class="form-group col-lg-3">
+            <label for="price">Tổng đơn hàng: <span style="color:#F5A623;">{{order.totalPrice}}</span></label><hr>
+          </div>
+          <hr>
+          <div class="form-group col-lg-12">
+            <button type="submit" class="btn btn-primary btn-block text-uppercase" >Cập nhật </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="js/jquery-3.3.1.min.js"></script>
+<!-- https://jquery.com/download/ -->
+<script src="js/bootstrap.min.js"></script>
+<!-- https://getbootstrap.com/ -->
+<script>
+//convert timeline to date
+$(document).ready(function() {
+  document.getElementById("timeline").innerHTML = timeConverter(parseInt(document.getElementById("timeline").innerHTML))
+
+})
+
+function timeConverter(UNIX_timestamp){
+  var a = new Date(UNIX_timestamp);
+  var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  var year = a.getFullYear();
+  var month = months[a.getMonth()];
+  var date = a.getDate();
+  var hour = a.getHours();
+  var min = a.getMinutes();
+  var sec = a.getSeconds();
+  var time = date + ' ' + month + ' ' + year + ' ' + hour + ':' + min + ':' + sec ;
+  return time;
+}
+
+</script>
