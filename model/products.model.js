@@ -17,7 +17,8 @@ var productsSchema = new mongoose.Schema({
 	publisherID: String,
 	info: String,
 	img: [String],
-	imgDir: [String]
+	imgDir: [String],
+	count: Number
 }, { collection: 'products' });
 
 //4.tạo model
@@ -26,6 +27,10 @@ var products = mongoose.model('products', productsSchema);
 
 module.exports.getAllProduct = function() {
 	return products.find().sort('title');
+}
+
+module.exports.top = function() {
+	return products.find().sort([['count', -1]]);
 }
 
 module.exports.getProductByID = (id) =>{

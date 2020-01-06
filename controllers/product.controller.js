@@ -418,3 +418,17 @@ module.exports.deletePublisher = (req, res, next) => {
 	error = '';
 	res.redirect('/products');
 }
+
+module.exports.top = function(req, res, next) {
+	if (req.user.type === 1) {
+		products.top()
+		.then(function (product) {
+			product = product.slice(0, 10);
+			console.log(product);
+			res.render('index', {title : 'Trang chủ', user: req.user, product});
+		});
+	} else {
+		req.flash('error_msg', 'Bạn không được phép truy cập vào đây!');
+		res.redirect('/account');
+	}
+}

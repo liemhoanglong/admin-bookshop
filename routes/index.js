@@ -4,17 +4,13 @@ const bcrypt = require('bcryptjs');
 const passport = require('passport');
 
 const admins =require('../model/admins.model');
+
+const controllerProduct =require('../controllers/product.controller');
+
 const { ensureAuthenticated, forwardAuthenticated } = require('../config/auth');
 
 /* GET home page. */
-router.get('/', ensureAuthenticated, function(req, res, next) {
-	if (req.user.type === 1) {
-		res.render('index', {title : 'Trang chủ', user: req.user});
-	} else {
-		req.flash('error_msg', 'Bạn không được phép truy cập vào đây!');
-			res.redirect('/account');
-	}
-});
+router.get('/', ensureAuthenticated, controllerProduct.top);
 
 /* GET day page. */
 router.get('/day', function(req, res, next) {

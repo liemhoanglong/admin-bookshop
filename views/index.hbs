@@ -6,10 +6,29 @@
     </div>
     <!-- row -->
     <div class="row tm-content-row">
-        <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6 tm-block-col">
-            <div class="tm-bg-primary-dark tm-block">
-                <h2 class="tm-block-title">Top sản phẩm</h2>
-                <canvas id="lineChart"></canvas>
+        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 tm-block-col">
+            <div class="tm-bg-primary-dark tm-block top">
+                <h2 class="tm-block-title">Top 10 sản phẩm</h2>
+                    <!-- <canvas id="lineChart"></canvas> -->
+                <div>
+                    <table class="table table-hover tm-table-small tm-product-table table-striped">
+                        <thead>
+                            <tr>
+                                <th scope="col">Tên đơn hàng</th>
+                                <th scope="col">Số lượng đã bán</th>
+                                <!-- <th scope="col">Số lượng</th> -->
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {{# each product}}
+                            <tr>
+                                <td class="tm-product-name">{{this.title}}</td>
+                                <td>{{this.count}}</td>
+                            </tr>
+                            {{/ each}}
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
         <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6 tm-block-col">
@@ -114,7 +133,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-12 tm-block-col">
+        <!-- <div class="col-12 tm-block-col">
             <div class="tm-bg-primary-dark tm-block tm-block-taller tm-block-scroll">
                 <h2 class="tm-block-title">Đơn đặt hàng</h2>
                 <table class="table">
@@ -265,7 +284,7 @@
                     </tbody>
                 </table>
             </div>
-        </div>
+        </div> -->
     </div>
 </div>
 
