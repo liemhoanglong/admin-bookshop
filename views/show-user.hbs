@@ -66,7 +66,7 @@
 						value="{{data.type}}"
 						class="form-control validate"
 						/> -->
-						<select name="type" class="custom-select tm-select-accounts" id="type">{{type_select data.type type}}</select> 
+						<select name="type" class="custom-select tm-select-accounts">{{type_select data.type type}}</select> 
 					</div>
 					<div class="form-group col-lg-6">
 						<label for="img">Link ảnh đại diện:</label>
@@ -78,6 +78,14 @@
 						class="form-control validate"
 						disabled
 						/>
+					</div>
+					<div class="form-group col-lg-6">
+						<label for="lock">Khóa tài khoản</label>
+						{{#if isMe}}
+						<select name="lock" class="custom-select tm-select-accounts" disabled>{{lock_select data.lock lock}}</select>
+						{{else}}
+						<select name="lock" class="custom-select tm-select-accounts">{{lock_select data.lock lock}}</select>
+						{{/if}}
 					</div>
 					<div class="form-group col-lg-12">
 						<label for="address">Địa chỉ:</label>

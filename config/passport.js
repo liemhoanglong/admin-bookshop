@@ -14,7 +14,9 @@ module.exports = function(passport) {
         if (!user) {
           return done(null, false, { message: 'Email chưa đăng kí' });
         }
-
+        console.log(user);
+        if (user.lock == 1)
+          return done(null, false, { message: 'Tài khoản bị khóa!' });
         // Match password
         //console.log(user.password);
         //console.log(password);

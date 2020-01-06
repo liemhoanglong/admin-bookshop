@@ -8,16 +8,33 @@ const bcrypt = require('bcryptjs');
 const handlebars= require('hbs');
 
 const type = [{id: 1, name: 'Quản lý'},{id: 2, name: 'Thủ kho'},{id: 3, name: 'Bán hàng'}];
+const type1 = type;
+
+const lock = [{id: 0, name: 'Mở'}, {id: 1, name: 'Khóa'}];
 
 handlebars.registerHelper("type_select",(selectedType,type_list)=>{
 	let html = "";
 	type_list.forEach(function(item) { 
 		if(item.id == selectedType)
 		{
-			html = html + '<option selected value="'+item.id+'">'+ item.name + '</option>';
+			html = html + '<option selected value="'+item.id+'">' + item.name + '</option>';
 		}
 		else{
-			html = html + '<option value="'+item.id+'">'+item.name+'</option>';
+			html = html + '<option value="'+item.id+'">' + item.name + '</option>';
+		} 
+	});
+	return new handlebars.SafeString(html);
+});
+
+handlebars.registerHelper("lock_select",(selectedLock,lock_list)=>{
+	let html = "";
+	lock_list.forEach(function(item) { 
+		if(item.id == selectedLock)
+		{
+			html = html + '<option selected value="'+item.id+'">' + item.name + '</option>';
+		}
+		else{
+			html = html + '<option value="'+item.id+'">' + item.name + '</option>';
 		} 
 	});
 	return new handlebars.SafeString(html);
@@ -59,7 +76,7 @@ module.exports.employees = (req, res) =>{
 	let endIndex = page * limit;
 	admins.find()
 	.then(function(admin){
-		if(req.user.type === 1){
+		if(req.user.type === 1){			
 			let numberOfUser = admin.length;
 			admin = admin.slice(startIndex, endIndex);
 			res.render('employees', {
@@ -79,7 +96,7 @@ module.exports.employees = (req, res) =>{
 module.exports.signup = (req, res) => {
 	//console.log(req.user);
 	if(req.user.type === 1){
-		res.render('sign-up', {title : 'Tạo tài khoản', user: req.user, type});
+		res.render('sign-up', {title : 'Tạo tài khoản', user: req.user, type1});
 	}else {
 		req.flash('error_msg', 'Bạn không được phép truy cập vào đây!');
 		res.redirect('/account');
@@ -119,7 +136,8 @@ module.exports.insert = function (req, res, next) {
 			email,
 			phone, 
 			address, 
-			type
+			type,
+			type1
 		});
 	} else {
 		//validation
@@ -135,7 +153,8 @@ module.exports.insert = function (req, res, next) {
 					email,
 					phone, 
 					address, 
-					type
+					type,
+					type1
 				});
 			} else {
 				const newAdmin = new admins({
@@ -144,7 +163,7 @@ module.exports.insert = function (req, res, next) {
 					phone, 
 					password,
 					address, 
-					type
+					type,
 				});
 				//hash password 
 				bcrypt.genSalt(10, (er, salt) => {
@@ -363,12 +382,19 @@ module.exports.forgetPassword = (req, res, next) => {
 
 module.exports.showUser =  (req, res, next) => {
 	admins.findById(req.query.id, function (err, userData) {
-		//console.log(userData);
+		console.log(userData);
 		if (err) {
 			console.log("Can't show data\n");
 			res.sendStatus(500);
 		} else {
-			res.render('show-user', {title : 'Thông tin nhân viên', data: userData, type});
+			console.log(req.query.id);
+			console.log(res.locals.user.id);
+			if (req.query.id == res.locals.user.id) {
+				let isMe = 1;
+				res.render('show-user', {title : 'Thông tin nhân viên', data: userData, type, lock, isMe});
+			} else {
+				res.render('show-user', {title : 'Thông tin nhân viên', data: userData, type, lock});
+			}
 		}
 	})
 }
@@ -378,10 +404,12 @@ module.exports.editEmployee =  (req, res, next) => {
 		if (err) {
 			console.error('error, no entry found');
 		}
-		// console.log(user.type);
+		// console.log(user);
 		// console.log(req.body.type);
 		user.type = req.body.type;
-		// console.log(user.type);
+		// console.log(req.body.lock);
+		user.lock = req.body.lock;
+		// console.log(user);
 		user.save();
 	});
 	res.redirect('/employees');

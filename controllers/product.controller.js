@@ -203,7 +203,8 @@ module.exports.updateProduct = async(req, res, next) => {
 		console.log("Can't show item\n");
 		res.sendStatus(500);
 	}
-	res.redirect('/products');
+	let temp = '/edit-product?id=' + req.query.id;
+	res.redirect(temp);
 }
 
 

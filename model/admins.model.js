@@ -16,7 +16,8 @@ var adminsSchema = new mongoose.Schema({
 	phone: String,
 	address: String,
 	img: String,
-	type:Number
+	type:Number,
+	lock: Number
 }, {collection: 'admins'});
 
 //4.tạo model
