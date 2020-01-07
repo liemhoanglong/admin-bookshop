@@ -18,7 +18,8 @@ var productsSchema = new mongoose.Schema({
 	info: String,
 	img: [String],
 	imgDir: [String],
-	count: Number
+	count: Number,
+	countView: Number,
 }, { collection: 'products' });
 
 //4.tạo model
@@ -48,6 +49,6 @@ module.exports.deleteProductByID = (id) =>{
 
 
 
-module.exports.createProduct = (title, price, author, info, categoriesID, publisher) =>{
-	return new products ({title, price, author, info, categoriesID, publisher});
+module.exports.createProduct = (title, price, author, info, publisherID, categoriesID, count, countView) =>{
+	return new products ({title, price, author, info, publisherID, categoriesID, count, countView});
 }

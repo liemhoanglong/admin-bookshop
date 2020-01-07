@@ -135,6 +135,7 @@ module.exports.addProduct = async (req, res, next) => {
 
 module.exports.insertProduct = (req, res, next) => {
 	let category = req.body.categories;
+	let a = 0 ;
 	// convert req.body.categories to array
 	let arraycategory = category.split(',');
 	const temp = {
@@ -142,10 +143,13 @@ module.exports.insertProduct = (req, res, next) => {
 		price: req.body.price,
 		author: req.body.author,
 		info: req.body.info,
+		publisherID: req.body.publisherID,
 		categoriesID: arraycategory,
-		publisher: req.body.publisher
+		count: a,
+		countView: a
 	}
-	let data = products.createProduct(temp.title, temp.price, temp.author, temp.info, temp.categoriesID, temp.publisher);
+	console.log(req.body.publisherID);
+	let data = products.createProduct(temp.title, temp.price, temp.author, temp.info, temp.publisherID ,temp.categoriesID, temp.count, temp.countView);
 	console.log(data);
 	data.save();
 	success_msg = 'Thêm sản phẩm thành công';
