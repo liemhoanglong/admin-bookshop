@@ -186,7 +186,7 @@ module.exports.insert = function (req, res, next) {
 }
 
 module.exports.update = function (req, res, next) {
-	const { name, email, password, password1, password2, phone, address, type} = req.body;
+	const { name, email, password, password1, password2, phone, address} = req.body;
 	let err=[];
 
 	//user hiện tại
@@ -195,7 +195,7 @@ module.exports.update = function (req, res, next) {
 	//console.log("email old"+user.email);
 
 	//check requied fields 
-	if (!name || !email || !password || !phone || !address ||!type) {
+	if (!name || !email || !password || !phone || !address) {
 		err.push({msg: 'Bạn chưa điền hết thông tin yêu cầu!'});
 		console.log(err);
 	} 
@@ -216,8 +216,8 @@ module.exports.update = function (req, res, next) {
 			name, 
 			email,
 			phone, 
-			address, 
-			type
+			address 
+			
 		});
 	} 
 
@@ -239,8 +239,8 @@ module.exports.update = function (req, res, next) {
 					name, 
 					email,
 					phone, 
-					address, 
-					type
+					address 
+					
 				});
 			} 
 			else{
@@ -255,15 +255,13 @@ module.exports.update = function (req, res, next) {
 							name,
 							email,
 							phone, 
-							address, 
-							type
+							address
 						});
        	 			} else {
        	 				user.name = name;
        	 				user.email = email;
        	 				user.phone = phone; 
        	 				user.address = address; 
-       	 				user.type = type ;
        	 				//bỏ qua password
        	 				user.save()
        	 				.then(admin => {
@@ -301,8 +299,7 @@ module.exports.update = function (req, res, next) {
 				name, 
 				email,
 				phone, 
-				address, 
-				type
+				address
 			});
 		} 
 
@@ -322,8 +319,7 @@ module.exports.update = function (req, res, next) {
 						name, 
 						email,
 						phone, 
-						address, 
-						type
+						address
 					});
 				}
 				else{
@@ -339,15 +335,13 @@ module.exports.update = function (req, res, next) {
 								name,
 								email,
 								phone, 
-								address, 
-								type
+								address
 							});
        	 				} else {
        	 					user.name = name;
        	 					user.email = email;
        	 					user.phone = phone; 
        	 					user.address = address; 
-       	 					user.type = type ;
        	 					bcrypt.genSalt(10, (er, salt) => {
        	 						bcrypt.hash(password1, salt, (er, hash) => {
        	 							if (er) throw er;
