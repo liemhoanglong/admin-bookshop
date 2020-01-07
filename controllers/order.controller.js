@@ -42,7 +42,7 @@ module.exports.showOrder = (req, res, next) => {
 };
 
 module.exports.eachOrder = (req, res) => {
-	orders.findById(req.query.id)
+	orders.getOrderByID(req.query.id)
 	.then((order) => {
 		res.render('order-detail', {
 			title : 'Chi tiết đơn hàng', 
@@ -53,7 +53,7 @@ module.exports.eachOrder = (req, res) => {
 };
 
 module.exports.updateOrder = (req, res) => {
-	orders.findById(req.query.id)
+	orders.getOrderByID(req.query.id)
 	.then((order) => {
 		order.status = req.body.status;
 		order.save();
