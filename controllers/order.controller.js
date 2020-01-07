@@ -27,12 +27,12 @@ handlebars.registerHelper("status_select",(selectedStatus, type_list)=>{
 
 module.exports.showOrder = (req, res, next) => {
 	if (req.user.type === 2) {		
-		orders.find()
-		// orders.getAllOrder()
+		//orders.find()
+		orders.getAllOrder()
 		.then((order) => {
 			res.render('order', {
 				title : 'Danh sách đơn hàng', 
-				order
+				order: order
 			});
 		});
 	} else {

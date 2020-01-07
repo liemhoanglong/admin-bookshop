@@ -28,8 +28,8 @@ const orderSchema = new mongoose.Schema({
 const orders = mongoose.model('orders', orderSchema);
 
 module.exports.getAllOrder = function() {
-	return orders.find();
+	return orders.find().sort({'timeline.ordering': 1});
 }
 
 
-module.exports = orders;
+//module.exports = orders;
